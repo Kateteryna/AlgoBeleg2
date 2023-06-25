@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         HashTableImpl hashTable = new HashTableImpl(300000);
 
-        String filename = "names.csv"; // Adjust the filename accordingly
+        String filename = "names.csv";
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -21,7 +21,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        // Example: Search for a specific string in the hash table
+        // Search for a specific string in the hash table
         String searchString = "John";
         String result = hashTable.search(searchString);
         if (result != null) {
@@ -30,8 +30,11 @@ public class Main {
             System.out.println("String '" + searchString + "' not found.");
         }
 
-        // Example: Delete a specific string from the hash table
+        // Delete a specific string from the hash table
         String deletedString = "Alice";
         hashTable.delete(deletedString);
+
+        hashTable.printHashTable();
+        hashTable.getCollisionCount();
     }
 }
