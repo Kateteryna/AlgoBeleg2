@@ -5,51 +5,54 @@ import static HashTable.UtilityFunctions.isPrime;
 
 public class HashTableImpl {
 
-    private int hashTableSize;
-    private String[] hashTableSlots;
+    private final String[] hashTableSlots;
 
-    private int currentHashTableSize;
+    private final int hashTableSize;
     private int elementsCounterInHashTable = 0;
     int collisionCounter = 0;
 
     public HashTableImpl(int slotsNumber) {
-        hashTableSize = slotsNumber;
         if(isPrime(slotsNumber)) {
-            hashTableSlots = new String[slotsNumber];
-            currentHashTableSize = slotsNumber;
+            hashTableSize = slotsNumber;
+            hashTableSlots = new String[hashTableSize];
         } else {
             int primeNumber = getNextPrime(slotsNumber);
-            hashTableSlots = new String[primeNumber];
-            currentHashTableSize = primeNumber;
+            hashTableSize = primeNumber;
+            hashTableSlots = new String[hashTableSize];
 
             System.out.println("This hash table size: " + slotsNumber + " - is not a prime number");
             System.out.println("The size has been changed into: " + primeNumber);
         }
     }
 
-    public void getCurrentAmountOfEntries() {
-        System.out.println("The amount of elements in the table is: " +elementsCounterInHashTable);
+    public int getCurrentAmountOfEntries() {
+        return elementsCounterInHashTable;
+    }
+
+    public void getRateOfFullfilment() { //Belegungsgrad
+        int percentage = 100*getCurrentAmountOfEntries()/hashTableSize;
+        System.out.println("The table is filled up to: " +percentage + " %");
     }
 
     private int firstHashingFunction(String entryString) {
         int hashCode = entryString.hashCode();
-        hashCode = hashCode % currentHashTableSize;
+        hashCode = hashCode % hashTableSize;
         if(hashCode < 0) {
-            hashCode += currentHashTableSize;
+            hashCode += hashTableSize;
         }
         return hashCode;
     }
 
     private int secondHashingFunction(String entryString) {
         int hashCode = entryString.hashCode();
-        hashCode = hashCode % currentHashTableSize;
+        hashCode = hashCode % hashTableSize;
         if(hashCode < 0){
-            hashCode += currentHashTableSize;
+            hashCode += hashTableSize;
         }
         return 7 - hashCode % 7; // step size
     }
 
-    public void insert(String entryString) { //using here linear probing rto handle collissions
+    public void insert(String entryString) { //using here linear probing to handle collissions
         if(elementsCounterInHashTable==hashTableSize) {
             System.out.println("Table is already full");
             return;
@@ -59,7 +62,7 @@ public class HashTableImpl {
 
         while (hashTableSlots[hashCode] != null) {
             hashCode = hashCode + stepSize;
-            hashCode = hashCode % currentHashTableSize;
+            hashCode = hashCode % hashTableSize;
             collisionCounter++; // Increment collision counter
         }
         hashTableSlots[hashCode] = entryString;
@@ -75,7 +78,7 @@ public class HashTableImpl {
                 return hashTableSlots[hashCode];
             }
             hashCode = hashCode + stepSize;
-            hashCode = hashCode % currentHashTableSize;
+            hashCode = hashCode % hashTableSize;
         }
         return hashTableSlots[hashCode];
     }
@@ -92,19 +95,19 @@ public class HashTableImpl {
                     return;
                 }
                 hashCode = hashCode + stepSize;
-                hashCode = hashCode % currentHashTableSize;
+                hashCode = hashCode % hashTableSize;
             }
         } else {
             System.out.println("String: '" + deletedString + "' was not found in the hash table");
         }
     }
 
-    public int getCollisionCount() {
-        return collisionCounter;
+    public void getCollisionCount() {
+        System.out.println("The number of occurred colissions is: " + collisionCounter);
     }
 
     public void printHashTable() {
-        for (int i = 0; i < currentHashTableSize; i++) {
+        for (int i = 0; i < hashTableSize; i++) {
             System.out.println("Index " + i + ": " + hashTableSlots[i]);
         }
     }

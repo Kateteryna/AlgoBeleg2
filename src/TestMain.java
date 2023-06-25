@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Main {
+public class TestMain {
     public static void main(String[] args) {
         HashTableImpl hashTable = new HashTableImpl(300000);
 
@@ -21,6 +21,15 @@ public class Main {
             e.printStackTrace();
         }
 
+        hashTable.printHashTable();
+        System.out.println(hashTable.getCurrentAmountOfEntries());
+        hashTable.getCollisionCount();
+
+        // Delete a specific string from the hash table
+        String deletedString = "Alice";
+        hashTable.delete(deletedString);
+
+
         // Search for a specific string in the hash table
         String searchString = "John";
         String result = hashTable.search(searchString);
@@ -30,11 +39,5 @@ public class Main {
             System.out.println("String '" + searchString + "' not found.");
         }
 
-        // Delete a specific string from the hash table
-        String deletedString = "Alice";
-        hashTable.delete(deletedString);
-
-        hashTable.printHashTable();
-        hashTable.getCollisionCount();
     }
 }
