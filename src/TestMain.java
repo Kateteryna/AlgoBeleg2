@@ -3,27 +3,24 @@ import HashTable.HashTableImpl;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import static HashTable.UtilityFunctions.countUniqueEntiesinCSV;
 
 public class TestMain {
     public static void main(String[] args) {
-        HashTableImpl hashTable = new HashTableImpl(300000);
-
         String filename = "names.csv";
+
+        HashTableImpl hashTable = new HashTableImpl((int) (countUniqueEntiesinCSV(filename)*1.2));
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] data = line.split(","); // Split the line by comma (assuming CSV format)
-                String name = data[0]; // Extract the desired data from the line
-                hashTable.insert(name);
+                hashTable.insert(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         hashTable.printHashTable();
-        System.out.println("Current amount of entries: " + hashTable.getCurrentAmountOfEntries());
-        hashTable.getCollisionCount();
 
         // Delete a specific string from the hash table
         String deletedString = "Alice";
@@ -38,6 +35,12 @@ public class TestMain {
         } else {
             System.out.println("String '" + searchString + "' not found.");
         }
+        hashTable.delete("Johnnie");
+
+        System.out.println("CurrentAmountOfEntries: " + hashTable.getElementsCounterInHashTable());
+        System.out.println("Collisions: " + hashTable.getCollisionCount());
+
+        hashTable.getRateOfFullfilment();
 
     }
 }

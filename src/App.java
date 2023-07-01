@@ -4,12 +4,17 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+import static HashTable.UtilityFunctions.countUniqueEntiesinCSV;
 
 public class App {
     public static void main(String[] args) {
+        String filename = "names.csv";
+
         Scanner scan = new Scanner(System.in);
         System.out.println("Welcome to the hash table management!\n");
-        System.out.println("Enter the size of a hash table");
+        System.out.println("Enter the size of a hash table.\n" +
+                "The recommended size is at least " +
+                (int) (countUniqueEntiesinCSV(filename) * 1.2));
 
         HashTableImpl hashTable = new HashTableImpl(scan.nextInt() );
         char chosenOptionChar;
@@ -23,21 +28,22 @@ public class App {
             System.out.println("Enter 3 to SEARCH for a certain item");
             System.out.println("Enter 4 to check how FULL the hash table is(Belegungsgrad)");
             System.out.println("Enter 5 to print the content of hash table");
-            System.out.println("\nEnter 6 to EXIT");
-            int choice = scan.nextInt();
+            System.out.println("Enter 6 to get the current amount of items in the hash table");
+            System.out.println("\nEnter 7 to EXIT");
 
 
-            String filename = "names.csv";
+            String choice = scan.next();
+
 
             String line;
 
             switch (choice)
             {
-                case 0:
+                case "0":
                     System.out.println("Enter an item you want to insert");
                     hashTable.insert(scan.next());
                     break;
-                case 1:
+                case "1":
                     try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
                         while((line = br.readLine()) != null) {
                             String[] data = line.split(",");
@@ -48,11 +54,11 @@ public class App {
                         e.printStackTrace();
                     }
                     break;
-                case 2 :
+                case "2" :
                     System.out.println("Enter what item you want to delete:");
                     hashTable.delete( scan.next() );
                     break;
-                case 3 :
+                case "3" :
                     System.out.println("Enter an item you want to look up:");
                     String entry = hashTable.search( scan.next() );
                     if(entry!= null) {
@@ -61,14 +67,17 @@ public class App {
                         System.out.println("There is no such item in the table");
                     }
                     break;
-                case 4 :
+                case "4" :
                     hashTable.getRateOfFullfilment();
                     break;
-                case 5 :
+                case "5" :
                     System.out.println("\nCurrent state of a hash table\n");
                     hashTable.printHashTable();
                     break;
-                case 6 :
+                case "6" :
+                    System.out.println("\nCurrent amount of entries in HT is: " + hashTable.getElementsCounterInHashTable());
+                    break;
+                case "7" :
                     System.exit(0);
                     break;
                 default :
