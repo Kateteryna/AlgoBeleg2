@@ -22,7 +22,7 @@ public class TestMain {
         }
 
         hashTable.printHashTable();
-        System.out.println(hashTable.getCurrentAmountOfEntries());
+        System.out.println("Current amount of entries: " + hashTable.getCurrentAmountOfEntries());
         hashTable.getCollisionCount();
 
         // Delete a specific string from the hash table
