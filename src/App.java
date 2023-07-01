@@ -75,7 +75,7 @@ public class App {
                     hashTable.printHashTable();
                     break;
                 case "6" :
-                    System.out.println("\nCurrent amount of entries in HT is: " + hashTable.getElementsCounterInHashTable());
+                    System.out.println("\nCurrent amount of entries in HT is: " + hashTable.getCurrentAmountOfEntries());
                     break;
                 case "7" :
                     System.exit(0);

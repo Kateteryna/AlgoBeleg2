@@ -26,21 +26,12 @@ public class HashTableImpl {
         primeTableSize = getSmallerPrime(hashTableSize);
     }
 
-    public int getElementsCounterInHashTable() {
-        int count = 0;
-        for (String slot : hashTableSlots) {
-            if (slot != null) {
-                count++;
-            }
-        }
-        return count;
-    }
     public int getCurrentAmountOfEntries() {
         return elementsCounterInHashTable;
     }
 
     public void getRateOfFullfilment() {
-        int percentage = 100 * getElementsCounterInHashTable() / hashTableSize;
+        int percentage = 100 * elementsCounterInHashTable / hashTableSize;
         System.out.println("The table is filled up to: " + percentage + "%");
     }
 

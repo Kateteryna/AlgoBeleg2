@@ -9,6 +9,7 @@ public class TestMain {
     public static void main(String[] args) {
         String filename = "names.csv";
 
+        // Set the initial size of the hash table based on the count of unique entries in the CSV file
         HashTableImpl hashTable = new HashTableImpl((int) (countUniqueEntiesinCSV(filename)*1.2));
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -21,7 +22,7 @@ public class TestMain {
         }
 
         hashTable.printHashTable();
-
+        System.out.println("CurrentAmountOfEntries: " + hashTable.getCurrentAmountOfEntries());
         // Delete a specific string from the hash table
         String deletedString = "Alice";
         hashTable.delete(deletedString);
@@ -37,7 +38,7 @@ public class TestMain {
         }
         hashTable.delete("Johnnie");
 
-        System.out.println("CurrentAmountOfEntries: " + hashTable.getElementsCounterInHashTable());
+        System.out.println("CurrentAmountOfEntries: " + hashTable.getCurrentAmountOfEntries());
         System.out.println("Collisions: " + hashTable.getCollisionCount());
 
         hashTable.getRateOfFullfilment();
