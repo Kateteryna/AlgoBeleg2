@@ -26,10 +26,12 @@ public class HashTableImpl {
         primeTableSize = getSmallerPrime(hashTableSize);
     }
 
+    //Retrieves the current number of entries in the hash table
     public int getCurrentAmountOfEntries() {
         return elementsCounterInHashTable;
     }
 
+    // Calculates and prints current rate of fulfillment of the hash table in percent
     public void getRateOfFullfilment() {
         int percentage = 100 * elementsCounterInHashTable / hashTableSize;
         System.out.println("The table is filled up to: " + percentage + "%");
@@ -60,13 +62,19 @@ public class HashTableImpl {
 
         int hashCode = firstHashingFunction(entryString);
         int stepSize = secondHashingFunction(entryString);
+        int i = 0;
 
         while (hashTableSlots[hashCode] != null) {
             if(Objects.equals(hashTableSlots[hashCode], entryString)) {
                 return;
             }
-            hashCode = (hashCode + stepSize) % hashTableSize;
+            // Updates the hash code using the step size and handles negative hash codes
+            hashCode = (hashCode - stepSize * i) % hashTableSize; //hi(k)=(h(k)−s(k)∗i)mod m
+            if (hashCode < 0) {
+                hashCode += hashTableSize;
+            }
             collisionCounter++;
+            i++;
         }
 
         hashTableSlots[hashCode] = entryString;
@@ -74,6 +82,12 @@ public class HashTableImpl {
         elementsCounterInHashTable++;
     }
 
+    /**
+     * Searches for a specific string in the hash table and returns it if found
+     *
+     * @param searchedString the string to search for
+     * @return the found string, or null if not found
+     */
     public String search(String searchedString) {
         int hashCode = firstHashingFunction(searchedString);
         int stepSize = secondHashingFunction(searchedString);
@@ -83,8 +97,8 @@ public class HashTableImpl {
             if (hashTableSlots[hashCode].equals(searchedString)) {
                 return hashTableSlots[hashCode];
             }
-
-            hashCode = (hashCode - stepSize * i) % hashTableSize;
+            // Updates the hash code using the step size and handles negative hash codes
+            hashCode = (hashCode - stepSize * i) % hashTableSize; //hi(k)=(h(k)−s(k)∗i)mod m
             if (hashCode < 0) {
                 hashCode += hashTableSize;
             }
@@ -94,6 +108,10 @@ public class HashTableImpl {
         return hashTableSlots[hashCode];
     }
 
+    /**
+     * Deletes a string from the hash table.
+     * @param deletedString the string to be deleted
+     */
     public void delete(String deletedString) {
         if (search(deletedString) != null) {
             int hashCode = firstHashingFunction(deletedString);
@@ -101,13 +119,15 @@ public class HashTableImpl {
             int i = 0;
 
             while (hashTableSlots[hashCode] != null) {
+                // If the current slot matches the deleted string, delete the string
                 if (hashTableSlots[hashCode].equals(deletedString)) {
                     hashTableSlots[hashCode] = null;
                     System.out.println("String: '" + deletedString + "' has been deleted successfully");
                     elementsCounterInHashTable--;
                     return;
                 }
-                hashCode = (hashCode - stepSize * i) % hashTableSize;
+                // Updates the hash code using the step size and handles negative hash codes
+                hashCode = (hashCode - stepSize * i) % hashTableSize; //hi(k)=(h(k)−s(k)∗i)mod m
                 if (hashCode < 0) {
                     hashCode += hashTableSize;
                 }
@@ -116,7 +136,12 @@ public class HashTableImpl {
         } else {
             System.out.println("String: '" + deletedString + "' was not found in the hash table");        }
     }
-
+    /**
+     * Retrieves the number of collisions that have occurred during insertion.
+     * (To check the efficiency and runtime of the insert method)
+     *
+     * @return the collision count
+     */
     public int getCollisionCount() {
         return collisionCounter;
     }

@@ -22,10 +22,11 @@ public class TestMain {
         }
 
         hashTable.printHashTable();
-        System.out.println("CurrentAmountOfEntries: " + hashTable.getCurrentAmountOfEntries());
+        System.out.println("Current Amount Of Entries: " + hashTable.getCurrentAmountOfEntries());
         // Delete a specific string from the hash table
         String deletedString = "Alice";
         hashTable.delete(deletedString);
+        hashTable.delete("Johnnie");
 
 
         // Search for a specific string in the hash table
@@ -36,9 +37,9 @@ public class TestMain {
         } else {
             System.out.println("String '" + searchString + "' not found.");
         }
-        hashTable.delete("Johnnie");
 
-        System.out.println("CurrentAmountOfEntries: " + hashTable.getCurrentAmountOfEntries());
+        //Print amount of entries in HT, ammount of colllisiond and rate of fullfillment
+        System.out.println("Current Amount Of Entries: " + hashTable.getCurrentAmountOfEntries());
         System.out.println("Collisions: " + hashTable.getCollisionCount());
 
         hashTable.getRateOfFullfilment();

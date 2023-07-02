@@ -9,6 +9,12 @@ import java.util.Set;
 
 public class UtilityFunctions {
 
+    /**
+     * Counts the number of unique entries in a CSV file.
+     *
+     * @param csvFile the path to the CSV file
+     * @return the number of unique entries
+     */
     public static int countUniqueEntiesinCSV(String csvFile) {
         Set<String> uniqueStrings = new HashSet<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
@@ -22,8 +28,13 @@ public class UtilityFunctions {
         return uniqueStrings.size();
     }
 
-
-    //Quelle: https://www.geeksforgeeks.org/java-program-to-check-if-a-number-is-prime-or-not/
+    /**
+     * Checks if a number is prime.
+     *
+     * @param n the number to check
+     * @return true if the number is prime, false otherwise
+     */
+    //Source: https://www.geeksforgeeks.org/java-program-to-check-if-a-number-is-prime-or-not/
     public static boolean isPrime(int n) {
         if (n <= 1)
             return false;
@@ -35,6 +46,12 @@ public class UtilityFunctions {
         return true;
     }
 
+    /**
+     * Returns the largest prime number smaller than the initial number.
+     *
+     * @param initialNumber the initial number
+     * @return the largest prime number smaller than the initial number
+     */
     public static int getSmallerPrime(int initialNumber) {
         for(int i = initialNumber-1; true; i--) {
             if(isPrime(i)) {
