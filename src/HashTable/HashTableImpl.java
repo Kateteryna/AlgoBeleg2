@@ -1,7 +1,5 @@
 package HashTable;
 
-import java.util.Objects;
-
 import static HashTable.UtilityFunctions.getSmallerPrime;
 import static HashTable.UtilityFunctions.isPrime;
 
@@ -46,6 +44,9 @@ public class HashTableImpl {
         return hashCode;
     }
 
+    //I had problems with the second hash function and had to look up an example implementation
+    //and as a result implemented it in the way was shown here:
+    //https://www.geeksforgeeks.org/java-program-to-implement-hash-tables-with-double-hashing/
     private int secondHashingFunction(String entryString) {
         int hashCode = entryString.hashCode() % hashTableSize;
         if (hashCode < 0) {
@@ -65,11 +66,11 @@ public class HashTableImpl {
         int i = 0;
 
         while (hashTableSlots[hashCode] != null) {
-            if(Objects.equals(hashTableSlots[hashCode], entryString)) {
+            if(String.valueOf(hashTableSlots[hashCode]).equals(entryString)) {
                 return;
             }
             // Updates the hash code using the step size and handles negative hash codes
-            hashCode = (hashCode - stepSize * i) % hashTableSize; //hi(k)=(h(k)−s(k)∗i)mod m
+            hashCode = hashCode - (stepSize * i +1) % hashTableSize; //hi(k)=(h(k)−s(k)∗i)mod m
             if (hashCode < 0) {
                 hashCode += hashTableSize;
             }
@@ -98,7 +99,7 @@ public class HashTableImpl {
                 return hashTableSlots[hashCode];
             }
             // Updates the hash code using the step size and handles negative hash codes
-            hashCode = (hashCode - stepSize * i) % hashTableSize; //hi(k)=(h(k)−s(k)∗i)mod m
+            hashCode = hashCode - (stepSize * i +1) % hashTableSize; //hi(k)=(h(k)−s(k)∗i)mod m
             if (hashCode < 0) {
                 hashCode += hashTableSize;
             }
@@ -127,7 +128,7 @@ public class HashTableImpl {
                     return;
                 }
                 // Updates the hash code using the step size and handles negative hash codes
-                hashCode = (hashCode - stepSize * i) % hashTableSize; //hi(k)=(h(k)−s(k)∗i)mod m
+                hashCode = hashCode - (stepSize * i +1) % hashTableSize; //hi(k)=(h(k)−s(k)∗i)mod m
                 if (hashCode < 0) {
                     hashCode += hashTableSize;
                 }

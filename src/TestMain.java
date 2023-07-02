@@ -40,7 +40,7 @@ public class TestMain {
 
         //Print amount of entries in HT, ammount of colllisiond and rate of fullfillment
         System.out.println("Current Amount Of Entries: " + hashTable.getCurrentAmountOfEntries());
-        System.out.println("Collisions: " + hashTable.getCollisionCount());
+        //System.out.println("Collisions: " + hashTable.getCollisionCount());
 
         hashTable.getRateOfFullfilment();
 
